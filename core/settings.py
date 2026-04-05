@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'articles',
     'teachers',
     'rest_framework',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -117,3 +118,42 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Maqolalar API',
+    'DESCRIPTION': '''
+    ## Maqolalar va O\'qituvchilar boshqaruvi uchun API
+    
+    Bu API ilmiy maqolalar va o\'qituvchilar ma\'lumotlarini boshqarish uchun mo\'ljallangan.
+    
+    ### Asosiy imkoniyatlar:
+    - 📚 Maqolalar ro\'yxatini ko\'rish va alohida maqola tafsilotlarini olish
+    - 👨‍🏫 O\'qituvchilar ro\'yxatini ko\'rish va alohida o\'qituvchi ma\'lumotlarini olish
+    - 📊 Tizim statistikasini ko\'rish
+    
+    ### Texnologiyalar:
+    - Django REST Framework
+    - PostgreSQL
+    - DRF Spectacular
+    ''',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SCHEMA_PATH_PREFIX': '/api',
+    'SWAGGER_UI_SETTINGS': {
+        'deepLinking': True,
+        'persistAuthorization': True,
+        'displayOperationId': True,
+        'filter': True,
+    },
+    'TAGS': [
+        {'name': 'Maqolalar', 'description': 'Ilmiy maqolalar bilan bog\'liq operatsiyalar'},
+        {'name': 'O\'qituvchilar', 'description': 'O\'qituvchilar ma\'lumotlari bilan bog\'liq operatsiyalar'},
+        {'name': 'Statistika', 'description': 'Tizim statistikasi'},
+    ],
+}

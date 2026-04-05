@@ -20,9 +20,14 @@ from .views import StatisticsView
 from django.conf import settings
 from django.conf.urls.static import static
 
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('articles.urls')),
-    path('', include('teachers.urls')),
-    path('statistics/', StatisticsView.as_view(), name='statistics'),
+    path('api/', include('articles.urls')),
+    path('api/', include('teachers.urls')),
+    path('api/statistics/', StatisticsView.as_view(), name='statistics'),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
